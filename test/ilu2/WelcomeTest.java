@@ -35,5 +35,13 @@ class WelcomeTest {
 		final String JERRY = "Jerry";
 		assertEquals("Hello, " + BOB + ", " + JERRY, Welcome.welcome(BOB + "," + JERRY));
 	}
+	
+	@Test
+	void test_ex5() {
+		final String AMY = "Amy";
+		final String BOB = "Bob";
+		final String JERRY = "Jerry";
+		assertEquals("Hello, " + AMY + ", " + BOB + ", " + JERRY, Welcome.welcome(AMY + ", " + BOB + "," + JERRY));
+	}
 
 }
