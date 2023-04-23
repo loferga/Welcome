@@ -12,8 +12,14 @@ public class Welcome {
 		if (input == null || input.trim().equals("")) return WELCOME_ANY;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("Hello, ");
-		sb.append(firstLetterUpperCase(input));
+		if (input.toUpperCase().equals(input)) { // upperCase mode
+			sb.append("HELLO, ");
+			sb.append(input);
+			sb.append(" !");
+		} else {
+			sb.append("Hello, ");
+			sb.append(firstLetterUpperCase(input));
+		}
 		return sb.toString();
 	}
 	
