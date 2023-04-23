@@ -7,8 +7,9 @@ import org.junit.jupiter.api.Test;
 class WelcomeTest {
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void test_ex1() {
+		assertEquals("Hello, Bob", Welcome.welcome("bob"));
+		assertEquals("Hello, Jerry", Welcome.welcome("jerry"));
 	}
 
 }
