@@ -11,14 +11,18 @@ public class Welcome {
 	public static String welcome(String input) {
 		if (input == null || input.trim().equals("")) return WELCOME_ANY;
 		
+		String[] split = input.split(",");
+		
 		StringBuilder sb = new StringBuilder();
 		if (input.toUpperCase().equals(input)) { // upperCase mode
 			sb.append("HELLO, ");
-			sb.append(input);
+			sb.append(split[0]);
+			if (split.length == 2) sb.append(", " + split[1]);
 			sb.append(" !");
 		} else {
 			sb.append("Hello, ");
-			sb.append(firstLetterUpperCase(input));
+			sb.append(firstLetterUpperCase(split[0]));
+			if (split.length == 2) sb.append(", " + firstLetterUpperCase(split[1]));
 		}
 		return sb.toString();
 	}

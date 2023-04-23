@@ -28,5 +28,12 @@ class WelcomeTest {
 		assertEquals("HELLO, " + BOB.toUpperCase() + " !", Welcome.welcome(BOB.toUpperCase()));
 		assertEquals("HELLO, " + JERRY.toUpperCase() + " !", Welcome.welcome(JERRY.toUpperCase()));
 	}
+	
+	@Test
+	void test_ex4() {
+		final String BOB = "Bob";
+		final String JERRY = "Jerry";
+		assertEquals("Hello, " + BOB + ", " + JERRY, Welcome.welcome(BOB + "," + JERRY));
+	}
 
 }
