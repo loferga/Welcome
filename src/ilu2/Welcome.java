@@ -28,6 +28,17 @@ public class Welcome {
 			};
 	}
 	
+	private static String welcomeNames(String[] names) {
+		if (names.length == 0) return "";
+		StringBuilder sb = new StringBuilder();
+		sb.append("Hello");
+		for (int i = 0; i<names.length; i++) {
+			sb.append(", ");
+			sb.append(firstLetterUpperCase(names[i].trim()));
+		}
+		return sb.toString();
+	}
+	
 	public static String welcome(String input) {
 		if (input == null || input.trim().equals("")) return WELCOME_ANY;
 		
@@ -37,19 +48,11 @@ public class Welcome {
 		String[] lowerCaseNames = sortedNames[0];
 		String[] upperCaseNames = sortedNames[1];
 		
-		boolean containLowerCaseNames = lowerCaseNames.length > 0;
-		
 		StringBuilder sb = new StringBuilder();
-		if (containLowerCaseNames) {
-			sb.append("Hello");
-			for (int i = 0; i<lowerCaseNames.length; i++)
-				sb.append(", " + firstLetterUpperCase(lowerCaseNames[i].trim()));
-		}
+		sb.append(welcomeNames(lowerCaseNames));
 		if (upperCaseNames.length > 0) {
-			if (containLowerCaseNames) sb.append(". AND ");
-			sb.append("HELLO");
-			for (int i = 0; i<upperCaseNames.length; i++)
-				sb.append(", " + upperCaseNames[i].trim());
+			if (lowerCaseNames.length > 0) sb.append(". AND ");
+			sb.append(welcomeNames(upperCaseNames).toUpperCase());
 			sb.append(" !");
 		}
 		return sb.toString();
