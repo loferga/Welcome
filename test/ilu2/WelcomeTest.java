@@ -69,5 +69,21 @@ class WelcomeTest {
 				Welcome.welcome(BOB + "        , " + AMY + "    ")
 			); 
 	}
+	
+	@Test
+	void test_ex9() {
+		assertEquals(
+				"Hello, " + BOB + " (x3) and " + AMY + ". AND HELLO, " + JERRY.toUpperCase() + " (x2) !",
+				Welcome.welcome(BOB + ", " + JERRY.toUpperCase() + ", " + AMY + ", " + BOB + ", " + JERRY.toUpperCase() + ", " + BOB)
+			);
+		assertEquals(
+				"Hello, " + BOB + " (x2). AND HELLO, " + BOB.toUpperCase() + " (x2) AND " + JERRY.toUpperCase() + " (x2) !",
+				Welcome.welcome(BOB + ", " + BOB.toUpperCase() + ", " + JERRY.toUpperCase() + ", " + BOB + ", " + JERRY.toUpperCase() + ", " + BOB.toUpperCase())
+			);
+		assertEquals(
+				"Hello, " + BOB + " (x2). AND HELLO, " + JERRY.toUpperCase() + " (x2) AND " + BOB.toUpperCase() + " (x2) !",
+				Welcome.welcome(BOB + ", " + JERRY.toUpperCase() + ", " + BOB.toUpperCase() + ", " + BOB + ", " + JERRY.toUpperCase() + ", " + BOB.toUpperCase())
+			);
+	}
 
 }

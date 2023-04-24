@@ -1,6 +1,6 @@
 package ilu2;
 
-import java.util.Arrays;
+import java.util.function.UnaryOperator;
 
 public class Welcome {
 	
@@ -10,51 +10,74 @@ public class Welcome {
 		return input.substring(0, 1).toUpperCase() .concat(input.substring(1));
 	}
 	
-	private static String[][] sortByCase(String[] names) {
-		String[] upperCase = new String[names.length];
-		int nbUpperCase = 0;
-		String[] lowerCase = new String[names.length];
-		int nbLowerCase = 0;
+	private static Counter[][] sortByCase(String[] names) {
+		CounterHolder lowerCase = new CounterHolder(names.length);
+		CounterHolder upperCase = new CounterHolder(names.length);
 		
-		for (String name : names) {
+		for (int i = 0; i<names.length; i++) {
+			String name = names[i].trim();
 			if (name.toUpperCase().equals(name))
-				upperCase[nbUpperCase++] = name;
-			else lowerCase[nbLowerCase++] = name;
+				upperCase.addName(name);
+			else lowerCase.addName(name);
 		}
 		
-		return new String[][] {
-				Arrays.copyOf(lowerCase, nbLowerCase),
-				Arrays.copyOf(upperCase, nbUpperCase)
-			};
+		return new Counter[][] { lowerCase.cut(), upperCase.cut() };
 	}
 	
-	private static String welcomeNames(String[] names) {
+	/**
+	 * @param names names to process
+	 * @param mode give what to add to the sentence, suit the following format:
+	 * mode[0]: start the sentence with
+	 * mode[1]: "and" keyword
+	 * mode[2]: end the sentence with
+	 * @param format function that tell what to do to every names before adding it in the sentence
+	 * @return the welcome String
+	 */
+	private static String welcomeNames(Counter[] names, String[] mode, UnaryOperator<String> format) {
 		if (names.length == 0) return "";
+		
 		StringBuilder sb = new StringBuilder();
-		sb.append("Hello");
+		sb.append(mode[0]); // start
+		
 		for (int i = 0; i<names.length; i++) {
-			if (names.length > 1 && i == names.length-1) sb.append(" and ");
+			if (names.length > 1 && i == names.length-1)
+				sb.append(mode[1]); // and keyword
 			else sb.append(", ");
-			sb.append(firstLetterUpperCase(names[i].trim()));
+			
+			sb.append( format.apply(names[i].getName()) ); // apply format to the name then add it
+			
+			int occurences = names[i].getOccurences();
+			if (occurences > 1) sb.append(" (x" + occurences + ')');
 		}
+		sb.append(mode[2]); // end
+		
 		return sb.toString();
 	}
 	
+	private static final String[] LOWER_MODE_FORMAT = {"Hello", " and ", ""};
+	private static String welcomeLowerNames(Counter[] names) {
+		return welcomeNames(names, LOWER_MODE_FORMAT, Welcome::firstLetterUpperCase);
+	}
+	
+	private static final String[] UPPER_MODE_FORMAT = {"HELLO", " AND ", " !"};
+	private static String welcomeUpperNames(Counter[] names) {
+		return welcomeNames(names, UPPER_MODE_FORMAT, e -> e);
+	}
+	
 	public static String welcome(String input) {
-		if (input == null || input.trim().equals("")) return WELCOME_ANY;
+		if (input == null || (input = input.trim()).equals("")) return WELCOME_ANY;
 		
 		String[] split = input.split(",");
 		
-		String[][] sortedNames = sortByCase(split);
-		String[] lowerCaseNames = sortedNames[0];
-		String[] upperCaseNames = sortedNames[1];
+		Counter[][] sortedNames = sortByCase(split);
+		Counter[] lowerCaseNames = sortedNames[0];
+		Counter[] upperCaseNames = sortedNames[1];
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append(welcomeNames(lowerCaseNames));
+		sb.append(welcomeLowerNames(lowerCaseNames));
 		if (upperCaseNames.length > 0) {
 			if (lowerCaseNames.length > 0) sb.append(". AND ");
-			sb.append(welcomeNames(upperCaseNames).toUpperCase());
-			sb.append(" !");
+			sb.append(welcomeUpperNames(upperCaseNames));
 		}
 		return sb.toString();
 	}
