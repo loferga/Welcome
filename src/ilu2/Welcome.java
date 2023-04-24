@@ -33,7 +33,8 @@ public class Welcome {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Hello");
 		for (int i = 0; i<names.length; i++) {
-			sb.append(", ");
+			if (names.length > 1 && i == names.length-1) sb.append(" and ");
+			else sb.append(", ");
 			sb.append(firstLetterUpperCase(names[i].trim()));
 		}
 		return sb.toString();
