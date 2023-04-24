@@ -5,11 +5,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class WelcomeTest {
+	
+	private static final String AMY = "Amy";
+	private static final String BOB = "Bob";
+	private static final String JERRY = "Jerry";
 
 	@Test
 	void test_ex1() {
-		assertEquals("Hello, Bob", Welcome.welcome("bob"));
-		assertEquals("Hello, Jerry", Welcome.welcome("jerry"));
+		assertEquals("Hello, " + BOB, Welcome.welcome(BOB));
+		assertEquals("Hello, " + JERRY, Welcome.welcome(JERRY));
 	}
 	
 	@Test
@@ -23,25 +27,26 @@ class WelcomeTest {
 	
 	@Test
 	void test_ex3() {
-		final String BOB = "bob";
-		final String JERRY = "jerry";
 		assertEquals("HELLO, " + BOB.toUpperCase() + " !", Welcome.welcome(BOB.toUpperCase()));
 		assertEquals("HELLO, " + JERRY.toUpperCase() + " !", Welcome.welcome(JERRY.toUpperCase()));
 	}
 	
 	@Test
 	void test_ex4() {
-		final String BOB = "Bob";
-		final String JERRY = "Jerry";
 		assertEquals("Hello, " + BOB + ", " + JERRY, Welcome.welcome(BOB + "," + JERRY));
 	}
 	
 	@Test
 	void test_ex5() {
-		final String AMY = "Amy";
-		final String BOB = "Bob";
-		final String JERRY = "Jerry";
 		assertEquals("Hello, " + AMY + ", " + BOB + ", " + JERRY, Welcome.welcome(AMY + ", " + BOB + "," + JERRY));
+	}
+	
+	@Test
+	void test_ex6() {
+		assertEquals(
+				"Hello, " + AMY + ", " + JERRY + ". AND HELLO, " + BOB.toUpperCase() + " !",
+				Welcome.welcome(AMY + ", " + BOB.toUpperCase() + ", " + JERRY)
+			);
 	}
 
 }
