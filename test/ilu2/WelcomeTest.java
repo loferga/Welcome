@@ -61,5 +61,13 @@ class WelcomeTest {
 				Welcome.welcome(BOB + ", " + AMY.toUpperCase() + ", " + JERRY + ", " + JACK.toUpperCase())
 			);
 	}
+	
+	@Test
+	void test_ex8() {
+		assertEquals(
+				"Hello, " + BOB + " and " + AMY,
+				Welcome.welcome(BOB + "        , " + AMY + "    ")
+			); 
+	}
 
 }
