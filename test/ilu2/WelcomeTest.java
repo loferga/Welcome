@@ -6,16 +6,13 @@ import org.junit.jupiter.api.Test;
 
 class WelcomeTest {
 	
-	private static final String AMY = "Amy";
 	private static final String BOB = "Bob";
 	private static final String JERRY = "Jerry";
-	private static final String JACK = "Jack";
-	private static final String YODA = "Yoda";
 
 	@Test
 	void test_ex01() {
-		assertEquals("Hello, " + BOB, Welcome.welcome(BOB));
-		assertEquals("Hello, " + JERRY, Welcome.welcome(JERRY));
+		assertEquals("Hello, Bob", Welcome.welcome(BOB));
+		assertEquals("Hello, Jerry", Welcome.welcome(JERRY));
 	}
 	
 	@Test
@@ -29,60 +26,60 @@ class WelcomeTest {
 	
 	@Test
 	void test_ex03() {
-		assertEquals("HELLO, " + BOB.toUpperCase() + " !", Welcome.welcome(BOB.toUpperCase()));
-		assertEquals("HELLO, " + JERRY.toUpperCase() + " !", Welcome.welcome(JERRY.toUpperCase()));
+		assertEquals("HELLO, BOB !", Welcome.welcome(BOB.toUpperCase()));
+		assertEquals("HELLO, JERRY !", Welcome.welcome(JERRY.toUpperCase()));
 	}
 	
 	@Test
 	void test_ex04() {
-		assertEquals("Hello, " + BOB + " and " + JERRY, Welcome.welcome(BOB + "," + JERRY));
+		assertEquals("Hello, Bob and Jerry", Welcome.welcome("bob,jerry"));
 	}
 	
 	@Test
 	void test_ex05() {
-		assertEquals("Hello, " + AMY + ", " + BOB + " and " + JERRY, Welcome.welcome(AMY + ", " + BOB + "," + JERRY));
+		assertEquals("Hello, Amy, Bob and Jerry", Welcome.welcome("amy, bob, jerry"));
 	}
 	
 	@Test
 	void test_ex06() {
 		assertEquals(
-				"Hello, " + AMY + " and " + JERRY + ". AND HELLO, " + BOB.toUpperCase() + " !",
-				Welcome.welcome(AMY + ", " + BOB.toUpperCase() + ", " + JERRY)
+				"Hello, Amy and Jerry. AND HELLO, BOB !",
+				Welcome.welcome("amy, BOB, jerry")
 			);
 	}
 	
 	@Test
 	void test_ex07() {
 		assertEquals(
-				"Hello, " + BOB + ", " + AMY + " and " + JERRY,
-				Welcome.welcome(BOB + ", " + AMY + "," + JERRY)
+				"Hello, Bob, Amy and Jerry",
+				Welcome.welcome("Bob, Amy, Jerry")
 			);
 		assertEquals(
-				"Hello, " + BOB + " and " + JERRY + ". AND HELLO, " + AMY.toUpperCase() + " AND " + JACK.toUpperCase() + " !",
-				Welcome.welcome(BOB + ", " + AMY.toUpperCase() + ", " + JERRY + ", " + JACK.toUpperCase())
+				"Hello, Bob and Jerry. AND HELLO, AMY AND JACK !",
+				Welcome.welcome("Bob, AMY, Jerry, JACK")
 			);
 	}
 	
 	@Test
 	void test_ex08() {
 		assertEquals(
-				"Hello, " + BOB + " and " + AMY,
-				Welcome.welcome(BOB + "        , " + AMY + "    ")
+				"Hello, Bob and Amy",
+				Welcome.welcome("Bob        , Amy    ")
 			); 
 	}
 	
 	@Test
 	void test_ex09() {
 		assertEquals(
-				"Hello, " + BOB + " (x3) and " + AMY + ". AND HELLO, " + JERRY.toUpperCase() + " (x2) !",
-				Welcome.welcome(BOB + ", " + JERRY.toUpperCase() + ", " + AMY + ", " + BOB + ", " + JERRY.toUpperCase() + ", " + BOB)
+				"Hello, Bob (x3) and Amy. AND HELLO, JERRY (x2) !",
+				Welcome.welcome("Bob, JERRY, Amy, Bob, JERRY, Bob")
 			);
 		assertEquals(
-				"Hello, " + BOB + " (x2). AND HELLO, " + BOB.toUpperCase() + " (x2) AND " + JERRY.toUpperCase() + " (x2) !",
+				"Hello, Bob (x2). AND HELLO, BOB (x2) AND JERRY (x2) !",
 				Welcome.welcome(BOB + ", " + BOB.toUpperCase() + ", " + JERRY.toUpperCase() + ", " + BOB + ", " + JERRY.toUpperCase() + ", " + BOB.toUpperCase())
 			);
 		assertEquals(
-				"Hello, " + BOB + " (x2). AND HELLO, " + JERRY.toUpperCase() + " (x2) AND " + BOB.toUpperCase() + " (x2) !",
+				"Hello, Bob (x2). AND HELLO, JERRY (x2) AND BOB (x2) !",
 				Welcome.welcome(BOB + ", " + JERRY.toUpperCase() + ", " + BOB.toUpperCase() + ", " + BOB + ", " + JERRY.toUpperCase() + ", " + BOB.toUpperCase())
 			);
 	}
@@ -93,15 +90,15 @@ class WelcomeTest {
 		//           ^                          ^                      ^                         ^
 		// Yoda change l'ordre des noms donc l'ordre des nom est celui inverse de celui de leur apparition
 		assertEquals(
-				AMY + ", " + YODA + " and " + BOB + ", Hello. AND HELLO, " + JERRY.toUpperCase() + " !",
-				Welcome.welcome(BOB + ", " + YODA + ", " + AMY + ", " + JERRY.toUpperCase())
+				"Amy, Yoda and Bob, Hello. AND HELLO, JERRY !",
+				Welcome.welcome("Bob, Yoda, Amy, JERRY")
 			);
 		// "Hello, Bob and Amy. AND YODA (X2) AND JERRY HELLO !" -> "Hello, Bob and Amy. AND JERRY AND YODA (x2), HELLO !"
 		//                                ^            ^                                                     ^  ^
 		// YODA vient avant JERRY dans la liste des noms et comme YODA inverse le sens des noms donc YODA doit être placé après JERRY
 		assertEquals(
-				"Hello, " + BOB + " and " + AMY + ". AND " + JERRY.toUpperCase() + " AND " + YODA.toUpperCase() + " (x2), HELLO !",
-				Welcome.welcome(BOB + ", " + YODA.toUpperCase() + ", " + AMY + ", " + JERRY.toUpperCase() + ", " + YODA.toUpperCase())
+				"Hello, Bob and Amy. AND JERRY AND YODA (x2), HELLO !",
+				Welcome.welcome("Bob, YODA, Amy, JERRY, YODA")
 			);
 	}
 
