@@ -36,30 +36,23 @@ public class Welcome {
 	private static String welcomeNames(Counter[] names, String[] mode, UnaryOperator<String> format) {
 		if (names.length == 0) return "";
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append(mode[0]); // start
+		SentenceBuilder sb = new SentenceBuilder(names.length + 2, mode); // names + hello keyword + and keyword
 		
 		for (int i = 0; i<names.length; i++) {
-			if (names.length > 1 && i == names.length-1)
-				sb.append(mode[1]); // and keyword
-			else sb.append(", ");
-			
-			sb.append( format.apply(names[i].getName()) ); // apply format to the name then add it
-			
-			int occurences = names[i].getOccurences();
-			if (occurences > 1) sb.append(" (x" + occurences + ')');
+			String name = names[i].getName();
+			if (name.equalsIgnoreCase("yoda")) sb.setReverse(true);
+			sb.append( format.apply(name), names[i].getOccurences() ); // apply format to the name then add it
 		}
-		sb.append(mode[2]); // end
 		
-		return sb.toString();
+		return sb.toString(); // end
 	}
 	
-	private static final String[] LOWER_MODE_FORMAT = {"Hello", " and ", ""};
+	private static final String[] LOWER_MODE_FORMAT = {"Hello", "and", ""};
 	private static String welcomeLowerNames(Counter[] names) {
 		return welcomeNames(names, LOWER_MODE_FORMAT, Welcome::firstLetterUpperCase);
 	}
 	
-	private static final String[] UPPER_MODE_FORMAT = {"HELLO", " AND ", " !"};
+	private static final String[] UPPER_MODE_FORMAT = {"HELLO", "AND", " !"};
 	private static String welcomeUpperNames(Counter[] names) {
 		return welcomeNames(names, UPPER_MODE_FORMAT, e -> e);
 	}
